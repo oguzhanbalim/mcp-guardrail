@@ -1,0 +1,21 @@
+# Anything not listed here is hidden from tools/list and denied on call.
+version: 1
+approval_timeout_seconds: 60
+
+tools:
+  read_file:
+    read_only: true
+    args:
+      path: { path_prefix: /workspace }
+
+  write_file:
+    approval: true
+    args:
+      path: { path_prefix: /workspace }
+      content: { max_length: 10000, redact: true }
+
+  issue_refund:
+    approval: true
+    args:
+      order_id: { pattern: "ORD-[0-9]+" }
+      amount: { min: 0.01, max: 100 }
